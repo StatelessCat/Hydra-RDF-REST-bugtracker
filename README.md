@@ -1,2 +1,2 @@
-# RDF-REST-bugtracker
-A very simple bugtracker API using RDF-REST
+# Hydra-bugtracker
+A very simple bugtracker API self-described in Hydra
