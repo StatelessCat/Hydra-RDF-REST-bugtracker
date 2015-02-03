@@ -16,7 +16,7 @@ GET http://localhost:8080/api/user
 ```
 
 HTTP Response:
-```
+```json
 [
     {
         "@context":"http://schema.org/",
