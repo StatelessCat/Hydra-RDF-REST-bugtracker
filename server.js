@@ -1,6 +1,7 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
+var userToJsonLD = require('./util/userToJsonld').toJsonLD;
 
 // MODEL
 var User = require('./app/models/user');
@@ -28,7 +29,7 @@ var router = express.Router();
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
-    // do logging
+    "use strict";
     console.log(req.method, " " ,req.originalUrl);
     next();
 });
@@ -36,12 +37,13 @@ router.use(function(req, res, next) {
 // ROUTES DEFINITIONS
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
+    "use strict";
     res.json({ message: 'hooray! welcome to our bugtracker api!' });
 });
 
 router.route('/user')
     .post(function(req, res) {
-
+        "use strict";
         var user = new User();
         user.givenName = req.body.givenName;
         user.familyName = req.body.familyName;
@@ -56,41 +58,29 @@ router.route('/user')
 
     // get all users
     .get(function(req, res) {
+        "use strict";
         User.find(function (err, users) {
             if (err) {
                 res.send(err);
             }
             // Add the schema.org/Person context to each object
-            users.forEach(function(usr) {
-                usr._doc["@context"] = { "@vocab" : "http://schema.org/" };
-                usr._doc["@type"] = "Person";
-                usr._doc["@id"] = usr._doc["_id"];
-
-                usr._doc["_id"] = {}; // we don't need this anymore
-                usr._doc["__v"] = {}; // we don't need this
-
-                user._doc["@id"] = urlAPI + urlUser + '/' + user._doc["@id"]
+            users.map(function(usr) {
+                userToJsonLD(usr, urlAPI, urlUser);
             });
             res.set('Content-Type', 'application/ld+json');
             res.json(users);
         });
     });
 
-router.route(urlUser + '/:user_id')
+router.route(urlUser + '/:userId')
     .get(function(req, res) {
-        User.findById(req.params.user_id, function(err, user) {
+        "use strict";
+        User.findById(req.params.userId, function(err, user) {
             if (err) {
                 res.send(err);
             }
 
-            user._doc["@context"] = { "@vocab" : "http://schema.org/" };
-            user._doc["@type"] = "Person";
-            user._doc["@id"] = user._doc["_id"];
-
-            user._doc["_id"] = {}; // we don't need this anymore
-            user._doc["__v"] = {}; // we don't need this
-
-            user._doc["@id"] = urlAPI + urlUser + '/' + user._doc["@id"]
+            user = userToJsonLD(user, urlAPI, urlUser);
 
             res.set('Content-Type', 'application/ld+json');
             res.json(user);
