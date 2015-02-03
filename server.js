@@ -13,6 +13,8 @@ app.use(bodyParser.json());
 
 // SERVER CONFIG
 var port = process.env.PORT || 8080;        // set our port
+var urlAPI = '/api';
+var urlUser = '/user';
 
 // MONGODB CONFIG
 var mongoDatabaseName = 'bugtracker';
@@ -66,13 +68,15 @@ router.route('/user')
 
                 usr._doc["_id"] = {}; // we don't need this anymore
                 usr._doc["__v"] = {}; // we don't need this
+
+                user._doc["@id"] = urlAPI + urlUser + '/' + user._doc["@id"]
             });
             res.set('Content-Type', 'application/ld+json');
             res.json(users);
         });
     });
 
-router.route('/user/:user_id')
+router.route(urlUser + '/:user_id')
     .get(function(req, res) {
         User.findById(req.params.user_id, function(err, user) {
             if (err) {
@@ -86,6 +90,8 @@ router.route('/user/:user_id')
             user._doc["_id"] = {}; // we don't need this anymore
             user._doc["__v"] = {}; // we don't need this
 
+            user._doc["@id"] = urlAPI + urlUser + '/' + user._doc["@id"]
+
             res.set('Content-Type', 'application/ld+json');
             res.json(user);
         });
@@ -93,7 +99,7 @@ router.route('/user/:user_id')
 
 
 // REGISTER OUR ROUTES
-app.use('/api', router);
+app.use(urlAPI, router);
 
 // START THE SERVER
 app.listen(port);
