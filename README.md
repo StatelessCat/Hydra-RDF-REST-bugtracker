@@ -19,10 +19,13 @@ HTTP Response:
 ```json
 [
     {
-        "@context":"http://schema.org/",
+        "@context":{
+            "@vocab":"http://schema.org/"
+        },
         "@type":"Person",
+        "@id":"54d13498f04ea3e410000001",
         "familyName":"Cazenave-Leveque",
-        "givenName":"Raphael",
+        "givenName":"Raphael"
     }
 ]
 ```

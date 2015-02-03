@@ -60,12 +60,27 @@ router.route('/user')
             }
             // Add the schema.org/Person context to each object
             users.forEach(function(usr) {
-                usr._doc["@context"] = "http://schema.org/";
+                usr._doc["@context"] = { "@vocab" : "http://schema.org/" };
                 usr._doc["@type"] = "Person";
+                usr._doc["@id"] = usr._doc["_id"];
+
+                usr._doc["_id"] = {}; // we don't need this anymore
+                usr._doc["__v"] = {}; // we don't need this
             });
             res.json(users);
         });
     });
+
+router.route('/user/:user_id')
+    .get(function(req, res) {
+        User.findById(req.params.user_id, function(err, user) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(user);
+        });
+    });
+
 
 // REGISTER OUR ROUTES
 app.use('/api', router);
