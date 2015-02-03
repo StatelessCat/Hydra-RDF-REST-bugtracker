@@ -41,9 +41,8 @@ router.route('/user')
     .post(function(req, res) {
 
         var user = new User();
-        user.firstname = req.body.firstname;
-        user.lastname = req.body.lastname;
-        user.password = req.body.password; // UNSAFE, this is just for test
+        user.givenName = req.body.givenName;
+        user.familyName = req.body.familyName;
 
         user.save(function(err) {
             if (err) {
@@ -59,6 +58,11 @@ router.route('/user')
             if (err) {
                 res.send(err);
             }
+            // Add the schema.org/Person context to each object
+            users.forEach(function(usr) {
+                usr._doc["@context"] = "http://schema.org/";
+                usr._doc["@type"] = "Person";
+            });
             res.json(users);
         });
     });
