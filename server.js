@@ -67,6 +67,7 @@ router.route('/user')
                 usr._doc["_id"] = {}; // we don't need this anymore
                 usr._doc["__v"] = {}; // we don't need this
             });
+            res.set('Content-Type', 'application/ld+json');
             res.json(users);
         });
     });
@@ -77,6 +78,15 @@ router.route('/user/:user_id')
             if (err) {
                 res.send(err);
             }
+
+            user._doc["@context"] = { "@vocab" : "http://schema.org/" };
+            user._doc["@type"] = "Person";
+            user._doc["@id"] = user._doc["_id"];
+
+            user._doc["_id"] = {}; // we don't need this anymore
+            user._doc["__v"] = {}; // we don't need this
+
+            res.set('Content-Type', 'application/ld+json');
             res.json(user);
         });
     });
