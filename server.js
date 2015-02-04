@@ -1,6 +1,9 @@
+// jshint node: true
+
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var userToJsonLD = require('./util/userToJsonld').toJsonLD;
 
 // MODEL
@@ -14,6 +17,7 @@ app.use(bodyParser.json());
 
 // SERVER CONFIG
 var port = process.env.PORT || 8080;        // set our port
+var urlServer = 'localhost';
 var urlAPI = '/api';
 var urlUser = '/user';
 
@@ -35,10 +39,19 @@ router.use(function(req, res, next) {
 });
 
 // ROUTES DEFINITIONS
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
     "use strict";
+    res.set('Link',
+        '<' + urlServer + '/api/doc/>; rel=\"http://www.w3.org/ns/hydra/core#apiDocumentation\"');
     res.json({ message: 'hooray! welcome to our bugtracker api!' });
+});
+
+// DOC
+router.get('/doc', function(req, res) {
+    "use strict";
+    var rstream = fs.createReadStream('./doc/apiDocumentation.jsonld');
+    res.set('Content-Type', 'application/ld+json');
+    rstream.pipe(res);
 });
 
 router.route('/user')
@@ -67,6 +80,7 @@ router.route('/user')
             users.map(function(usr) {
                 userToJsonLD(usr, urlAPI, urlUser);
             });
+
             res.set('Content-Type', 'application/ld+json');
             res.json(users);
         });
