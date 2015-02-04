@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // SERVER CONFIG
-var port = process.env.PORT || 8080;        // set our port
-var urlServer = 'localhost';
+var port = process.env.PORT || 80;        // set our port
+var urlServer = 'http://vps.schrodingerscat.ovh';
 var urlAPI = '/api';
 var urlUser = '/user';
 
@@ -42,8 +42,10 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
     "use strict";
     res.set('Link',
-        '<' + urlServer + '/api/doc/>; rel=\"http://www.w3.org/ns/hydra/core#apiDocumentation\"');
-    res.json({ message: 'hooray! welcome to our bugtracker api!' });
+        '<http://vps.schrodingerscat.ovh/api/doc/>; rel=\"http://www.w3.org/ns/hydra/core#apiDocumentation\"');
+    res.set('Content-Type', 'application/ld+json');
+    var rstream = fs.createReadStream('./doc/entryPoint.jsonld');
+    rstream.pipe(res);
 });
 
 // DOC
@@ -51,6 +53,8 @@ router.get('/doc', function(req, res) {
     "use strict";
     var rstream = fs.createReadStream('./doc/apiDocumentation.jsonld');
     res.set('Content-Type', 'application/ld+json');
+    res.set('Link',
+        '<' + urlServer + '/api/doc/>; rel=\"http://www.w3.org/ns/hydra/core#apiDocumentation\"');
     rstream.pipe(res);
 });
 
@@ -108,3 +112,4 @@ app.use(urlAPI, router);
 // START THE SERVER
 app.listen(port);
 console.log('Magic happens on port ' + port);
+

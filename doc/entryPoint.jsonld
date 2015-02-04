@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "vocab": "http://vps.schrodingerscat.ovh/api/doc/",
+    "EntryPoint": "vocab:EntryPoint",
+    "user": {
+      "@id": "vocab:EntryPoint/user",
+      "@type": "@id"
+    }
+  },
+  "@id": "/api/",
+  "@type": "EntryPoint",
+  "user": "/api/user/"
+}
