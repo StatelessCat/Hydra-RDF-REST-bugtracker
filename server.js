@@ -49,12 +49,7 @@ router.get('/', function(req, res) {
 });
 
 // Angular Front-end files
-app.get('/public', function(req, res) {
-    res.sendfile('./public/index.html');
-});
-app.get('/js/ng-index.js', function(req, res) {
-    res.sendfile('./public/js/ng-index.js');
-});
+app.use('/public', express.static(__dirname + '/public'));
 
 // DOC
 router.get('/doc', function(req, res) {
