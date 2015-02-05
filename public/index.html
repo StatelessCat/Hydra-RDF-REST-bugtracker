@@ -6,14 +6,19 @@
 
 <ul>
     <li ng-repeat="user in users">
-        {{ user.givenName }}
-        {{ user.familyName }}
-        is a
-        {{ '<' + user['@context']['@vocab'] + user['@type'] + '>'}}
+        <span>name: {{ user['http://xmlns.com/foaf/0.1/name'] }}</span>
+        <span>born: {{ user['http://schema.org/birthDate'] }} </span>
     </li>
 </ul>
 
-<script src="js/ng-index.js"></script>
+<script src="js/rdfrestbundle.js"></script>
+<script>
+    var g = graph.copyGraph();
+
+
+</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src="js/ng-index.js"></script>
 </body>
 </html>
