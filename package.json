@@ -1,5 +1,5 @@
 {
-  "name": "Hydra-bugtracker",
+  "name": "Hydra-RDF-REST-bugtracker",
   "main": "server.js",
   "dependencies": {
     "express": "~4.11.2",

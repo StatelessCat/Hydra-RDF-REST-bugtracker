@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // SERVER CONFIG
-var port = process.env.PORT || 80;        // set our port
+var port = process.env.PORT || 8080;        // set our port
 var urlServer = 'http://vps.schrodingerscat.ovh';
 var urlAPI = '/api';
 var urlUser = '/user';
@@ -46,6 +46,14 @@ router.get('/', function(req, res) {
     res.set('Content-Type', 'application/ld+json');
     var rstream = fs.createReadStream('./doc/entryPoint.jsonld');
     rstream.pipe(res);
+});
+
+// Angular Front-end files
+app.get('/public', function(req, res) {
+    res.sendfile('./public/index.html');
+});
+app.get('/js/ng-index.js', function(req, res) {
+    res.sendfile('./public/js/ng-index.js');
 });
 
 // DOC
