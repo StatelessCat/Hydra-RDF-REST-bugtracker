@@ -35,12 +35,4 @@ function UserController($scope, $http, $window){
             }
         });
     });
-
-    $scope.message = "Waiting 2000ms for update";
-
-    setTimeout(function () {
-        $scope.$apply(function () {
-            $scope.message = "Timeout called!";
-        });
-    }, 2000);
 }
