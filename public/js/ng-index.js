@@ -3,7 +3,7 @@ function UserController($scope, $http, $window){
 
     var ns = rdfNode.namespace('http://ex.co/vocab#');
 
-    var bc = coreFactory.getCore("http://localhost:8080/api/user");
+    var bc = coreFactory.getCore("http://localhost:8080/api/user/54d357ea2f6af8e974000001");
 
     bc.getState().then(function(g) {
         serializerJsonLd.jsonld(g).then(function(jsonldDoc) {

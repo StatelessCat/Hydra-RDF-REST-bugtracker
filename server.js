@@ -85,7 +85,7 @@ router.route('/user')
             }
             // Add the schema.org/Person context to each object
             users.map(function(usr) {
-                userToJsonLD(usr, urlAPI, urlUser);
+                userToJsonLD(usr, urlServer, urlAPI, urlUser);
             });
 
             res.set('Content-Type', 'application/ld+json');
@@ -101,7 +101,7 @@ router.route(urlUser + '/:userId')
                 res.send(err);
             }
 
-            user = userToJsonLD(user, urlAPI, urlUser);
+            user = userToJsonLD(user, urlServer, urlAPI, urlUser);
 
             res.set('Content-Type', 'application/ld+json');
             res.json(user);
