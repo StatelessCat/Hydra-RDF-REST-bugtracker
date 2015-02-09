@@ -99,12 +99,12 @@ router.route(urlUser + '/:userId')
         User.findById(req.params.userId, function(err, user) {
             if (err) {
                 res.send(err);
+            } else {
+                user = userToJsonLD(user, urlServer, urlAPI, urlUser);
+
+                res.set('Content-Type', 'application/ld+json');
+                res.json(user);
             }
-
-            user = userToJsonLD(user, urlServer, urlAPI, urlUser);
-
-            res.set('Content-Type', 'application/ld+json');
-            res.json(user);
         });
     });
 
