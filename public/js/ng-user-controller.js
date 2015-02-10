@@ -8,7 +8,7 @@ function UserController($scope) {
     "use strict";
     $scope.triples = []; // Here it's a JSON-LD
 
-    var bc = coreFactory.getCore("http://localhost:8080/api/user/54d357ea2f6af8e974000001");
+    var bc = coreFactory.getCore("http://localhost:8080/api/user/54da8d9d0f7c387641739640");
 
     bc.getState()
         .then(function(g) {
