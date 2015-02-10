@@ -16,7 +16,6 @@
     graph = require('../src/graph');
     rdfNode = require('../src/rdfnode');
 
-
 },{"../src/cores/basic":20,"../src/cores/factory":21,"../src/cores/http":22,"../src/cores/hydra":23,"../src/graph":24,"../src/parsers/debug":25,"../src/parsers/factory":26,"../src/parsers/json-ld-adapter":27,"../src/parsers/n-triples-adapter":28,"../src/rdfnode":29,"../src/serializers/factory":30,"../src/serializers/jsonld":31,"../src/serializers/nt":32}],2:[function(require,module,exports){
 // Ignore module for browserify (see package.json)
 },{}],3:[function(require,module,exports){
@@ -7296,7 +7295,7 @@
         })();
 
         module.exports = jsonldjs;
-    }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},"/../node_modules/jsonld/js")
+    }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},"/node_modules/jsonld/js")
 },{"./request":2,"_process":48,"crypto":2,"es6-promise":4,"http":2,"pkginfo":5,"request":2,"util":2,"xmldom":2}],4:[function(require,module,exports){
     (function (process,global){
         /*!
@@ -7838,7 +7837,7 @@
             /**
              Promise objects represent the eventual result of an asynchronous operation. The
              primary way of interacting with a promise is through its `then` method, which
-             registers callbacks to receive either a promise’s eventual value or the reason
+             registers callbacks to receive either a promiseâs eventual value or the reason
              why the promise cannot be fulfilled.
 
              Terminology
@@ -8398,7 +8397,7 @@
             include: ['version'],
             target: pkginfo
         });
-    }).call(this,"/../node_modules/jsonld/node_modules/pkginfo/lib")
+    }).call(this,"/node_modules/jsonld/node_modules/pkginfo/lib")
 },{"fs":33,"path":47}],6:[function(require,module,exports){
 // Replace local require by a lazy loader
     var globalRequire = require;
@@ -9061,7 +9060,7 @@
                 this._callback(null, { subject:   this._subject,
                     predicate: this._predicate,
                     object:    this._object,
-                    graph:     this._graph || '' });
+                    graph:     this._graph ||Â '' });
 
             // Restore parent triple that contains the blank node.
             var triple = this._tripleStack.pop();
@@ -9259,7 +9258,7 @@
                 this._callback(null, { subject:   subject,
                     predicate: this._predicate,
                     object:    this._object,
-                    graph:     graph || '' });
+                    graph:     graph ||Â '' });
             return next;
         },
 
@@ -9980,7 +9979,7 @@
 
         // Initialize writer, depending on the format
         this._subject = null;
-        options = options || {};
+        options = options ||Â {};
         if (!(/triple|quad/i).test(options.format)) {
             this._graph = '';
             this._prefixIRIs = Object.create(null);
@@ -10855,15 +10854,17 @@
                         }
                         _graph = graph();
                         var p = getParser({
-                            contentType:'application/debug+json',
+                            contentType:'application/ld+json',
                             graph: _graph
                         });
-                        res.setEncoding('utf8');
+                        //res.setEncoding('utf8');
                         res.on('data', function (chunk) {
                             p.addChunk(chunk);
                         });
                         res.on('end', function() {
-                            p.finalize().then(resolve(_graph));
+                            p.finalize().then(function() {
+                                resolve(_graph);
+                            })
                         });
                     } else {
                         reject("Unsupported statusCode " + res.statusCode);
@@ -10939,7 +10940,7 @@
                                     (Date.now() + Number(match[1])*1000) : undefined;
                                 _graph = graph();
                                 var p = getParser({
-                                    contentType:'application/debug+json',
+                                    contentType:'application/ld+json',
                                     graph: _graph
                                 });
                                 res.setEncoding('utf8');
@@ -11459,7 +11460,7 @@
             parser.parse(ntriples, function (error, triple) {
                 if (triple) {
                     g.addTriple(iri(triple.subject),
-                        iri(triple.predicate), triple.object); // on ajoute un à un les triplets
+                        iri(triple.predicate), triple.object); // on ajoute un Ã  un les triplets
                 } else {
                     // parsing is done, we can continue
                     if (g) {

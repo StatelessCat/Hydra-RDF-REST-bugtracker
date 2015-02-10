@@ -9,5 +9,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/StatelessCat/Hydra-bugtracker.git"
+  },
+  "devDependencies": {
+    "eslint-plugin-angular": "0.0.3"
   }
 }
