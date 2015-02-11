@@ -11,6 +11,16 @@
         <span><strong>O:</strong> {{ triple['object'] }} </span>
     </li>
 </ul>
+<form ng-submit="submit()">
+    Subject: <input ng-model="newSubject">
+    Predicate: <input ng-model="newPredicate">
+    Object: <input ng-model="newObject">
+    <input type="submit" id="submit" value="Submit" />
+    <pre>Subject={{newSubject}}</pre>
+    <pre>Predicate={{newPredicate}}</pre>
+    <pre>Object={{newObject}}</pre>
+</form>
+
 
 <script src="components/rdf-rest-js/browserified/rdfrestbundle.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>

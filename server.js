@@ -15,7 +15,7 @@ var User = require("./app/models/user");
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({type: "application/ld+json"})); // parsing ld+json as normal json
 
 // SERVER CONFIG
 var port = process.env.PORT || 8080;        // set our port
@@ -110,6 +110,17 @@ router.route(urlUser + "/:userId")
         });
     });
 
+
+router.route(urlUser + "/:userId").put(function(req, res){
+    "use strict";
+    console.log(req);
+    if (!req.body) {
+        return res.sendStatus(400);
+    } else {
+        console.log(req);
+        // TODO modify the document on mongoDB
+    }
+});
 
 // REGISTER OUR ROUTES
 app.use(urlAPI, router);
