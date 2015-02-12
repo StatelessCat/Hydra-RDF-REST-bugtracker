@@ -1,10 +1,11 @@
-var mongoose     = require('mongoose');
-var Schema       = mongoose.Schema;
+/*eslint-env node*/
 
-var UserSchema   = new Schema({
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
+var UserSchema = new Schema({
     "givenName": String,
     "familyName": String
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
