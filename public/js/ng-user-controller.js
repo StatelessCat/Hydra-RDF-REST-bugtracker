@@ -1,6 +1,7 @@
 /*eslint-env browser, node*/
 /*global coreFactory:false, serializerFactory:false, parserFactory:false */
 /*global graph:false */
+/*global rdfNode:false */
 /*global angular:false */
 
 //noinspection Eslint
@@ -14,11 +15,11 @@ function UserController($scope) {
             console.log($scope.newPredicate);
             console.log($scope.newObject);
 
-            var ressource = coreFactory.getCore("http://localhost:8080/api/user/54da8d9d0f7c387641739640");
+            var ressource = coreFactory.getCore("http://localhost:8080/api/user/54d357ea2f6af8e974000001");
             ressource.edit(function(graph) {
-                return graph.addTriple($scope.newSubject, $scope.newPredicate, $scope.newObject)
+                return graph.addTriple(rdfNode.iri($scope.newSubject), rdfNode.iri($scope.newPredicate), $scope.newObject)
                     .then(function() {
-                        var ressource2 = coreFactory.getCore("http://localhost:8080/api/user/54da8d9d0f7c387641739640");
+                        var ressource2 = coreFactory.getCore("http://localhost:8080/api/user/54d357ea2f6af8e974000001");
 
                         ressource2.getState()
                             .then(function (g) {
@@ -68,7 +69,7 @@ function UserController($scope) {
         }
     };
 
-    var bc = coreFactory.getCore("http://localhost:8080/api/user/54da8d9d0f7c387641739640");
+    var bc = coreFactory.getCore("http://localhost:8080/api/user/54d357ea2f6af8e974000001");
 
     bc.getState()
         .then(function(g) {
