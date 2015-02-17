@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "requirejs": "~2.1.16",
-    "rdf-rest-js": "~0.9.1",
-    "jsonld": "~0.3.20"
+    "rdfrestjs": "0.9.3"
   }
 }

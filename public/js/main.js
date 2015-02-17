@@ -1,32 +1,43 @@
 /*eslint-env amd, browser*/
-/*eslint no-console:0*/
 
 require.config({
     paths: {
-        jsonld: "../components/jsonld/js/jsonld"
+        rdfrestjs: "../components/rdfrestjs/browserified/rdfrest-bundle"
     }
 });
 
-define(["jsonld"], function(jsonld) {
+define(["rdfrestjs"], function(rdfrestjs) {
     "use strict";
 
-    var doc = {
-        "http://schema.org/name": "Manu Sporny",
-        "http://schema.org/url": {"@id": "http://manu.sporny.org/"},
-        "http://schema.org/image": {"@id": "http://manu.sporny.org/images/manu.png"}
-    };
-    var context = {
-        "name": "http://schema.org/name",
-        "homepage": {"@id": "http://schema.org/url", "@type": "@id"},
-        "image": {"@id": "http://schema.org/image", "@type": "@id"}
-    };
+    var getCore = rdfrestjs.coreFactory.getCore;
+    var iri = rdfrestjs.rdfNode.iri;
+    var namespace = rdfrestjs.rdfNode.namespace;
+    var nt = rdfrestjs.serializerNTriples.nt;
 
-    // compact a document according to a particular context
-    // see: http://json-ld.org/spec/latest/json-ld/#compacted-document-form
-    jsonld.compact(doc, context, function(err, compacted) {
-        var para = document.createElement("p");
-        var node = document.createTextNode(JSON.stringify(compacted, null, 2));
-        para.appendChild(node);
-        document.body.appendChild(para);
+    var me = iri("http://champin.net");
+    var ns = namespace("http://ex.co/vocab#");
+    var ressource = getCore(me);
+
+    ressource.getState().then(function(g) {
+
+        // 'cause we cannot use console.log as a function in a browser
+        //noinspection Eslint
+        return nt(g, console.info.bind(console));
+
+    }).then(function() {
+
+        // then we edit the graph
+        return ressource.edit(function(g) {
+            return g.addTriple(me, ns("type"), ns("Person"));
+        });
+    }).then(function() {
+        return ressource.edit(function(g2) {
+            return g2.addTriple(me, ns("label"), "Pierre-Antoine Champin");
+        });
+    }).then(function(g) {
+        //noinspection Eslint
+        console.log("----\n");
+        //noinspection Eslint
+        return nt(g, console.info.bind(console));
     });
 });
