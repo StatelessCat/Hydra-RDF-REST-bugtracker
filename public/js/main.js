@@ -16,7 +16,8 @@ define(["rdfrestjs"], function(rdfrestjs) {
 
     var me = iri("http://champin.net");
     var ns = namespace("http://ex.co/vocab#");
-    var ressource = getCore(me);
+
+    var ressource = getCore("http://localhost:8080/api/user/54da8d9d0f7c387641739640");
 
     ressource.getState().then(function(g) {
 

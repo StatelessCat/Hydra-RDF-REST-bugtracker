@@ -2,9 +2,10 @@
   "name": "Hydra-RDF-REST-bugtracker",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "~1.11.0",
+    "cors": "^2.5.3",
     "express": "~4.11.2",
     "mongoose": "~3.8.22",
-    "body-parser": "~1.11.0",
     "rdfrest": "0.9.3"
   },
   "repository": {

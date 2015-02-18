@@ -7,6 +7,7 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var fs = require("fs");
 var userToJsonLD = require("./util/userToJsonld").toJsonLD;
+var cors = require('cors');
 
 // MODEL
 var User = require("./app/models/user");
@@ -22,6 +23,13 @@ var port = process.env.PORT || 8080;        // set our port
 var urlServer = "http://vps.schrodingerscat.ovh";
 var urlAPI = "/api";
 var urlUser = "/user";
+
+// CORS
+var corsOptions = {
+    origin: 'http://localhost:63342',
+    credentials: 'true'
+};
+app.use(cors(corsOptions));
 
 // MONGODB CONFIG
 var mongoDatabaseName = "bugtracker";
@@ -103,6 +111,8 @@ router.route(urlUser + "/:userId")
                 res.send(err);
             } else {
                 user = userToJsonLD(user, urlServer, urlAPI, urlUser);
+
+                res.set('Access-Control-Allow-Credentials', 'true');
 
                 res.set("Content-Type", "application/ld+json");
                 res.json(user);

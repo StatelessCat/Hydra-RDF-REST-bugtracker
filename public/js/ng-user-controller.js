@@ -15,7 +15,7 @@ function UserController($scope) {
             console.log($scope.newPredicate);
             console.log($scope.newObject);
 
-            var ressource = coreFactory.getCore("http://localhost:8080/api/user/54d357ea2f6af8e974000001");
+            var ressource = coreFactory.getCore("http://localhost:8080/api/user/54da8d9d0f7c387641739640");
             ressource.edit(function(graph) {
                 return graph.addTriple(rdfNode.iri($scope.newSubject), rdfNode.iri($scope.newPredicate), $scope.newObject)
                     .then(function() {
