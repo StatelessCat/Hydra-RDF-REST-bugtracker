@@ -16,6 +16,6 @@
   ],
   "dependencies": {
     "requirejs": "~2.1.16",
-    "rdfrestjs": "0.9.3"
+    "rdfrestjs": "1.0.0"
   }
 }
